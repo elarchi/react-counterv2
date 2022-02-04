@@ -7,16 +7,16 @@ import Footer from "./components/Footer";
 import { useState } from "react";
 
 function App() {
-  const [tab, setTab] = useState([<Counter />]);
-  // const [counter, setCounter] = useState(0);
+  // const [tab, setTab] = useState([<Counter />]);
+  const [counters, setCounters] = useState([0]);
 
   const handleClick = () => {
     // Créer une copie de tab
-    const newTab = [...tab];
+    const newCounters = [...counters];
     // Modifier la copie
-    newTab.push(<Counter />);
+    newCounters.push(0);
     // Mettre à jour l'état avec la copie
-    setTab(newTab);
+    setCounters(newCounters);
     // Les fonctions qui mettent à jour un état sont ASYNCHRONES
     // console.log("Tab ====> ", tab);
 
@@ -31,8 +31,30 @@ function App() {
         <button onClick={handleClick}>Add counter</button>
 
         <div className="counters_div">
-          {tab.map((elem, index) => {
-            return index < 3 && <p>{elem}</p>;
+          {counters.map((counter, index) => {
+            //[0,0,0]
+            // quand c'est le premier  counter, index 0,
+            return (
+              index < 3 && (
+                <p>
+                  {
+                    <Counter
+                      counter={counter}
+                      more={() => {
+                        counter + 1;
+                      }}
+                      less={() => {
+                        counter - 1;
+                      }}
+                      reset={() => {
+                        counter - 1 * counter;
+                      }}
+                      key={index}
+                    />
+                  }
+                </p>
+              )
+            );
           })}
         </div>
       </main>
